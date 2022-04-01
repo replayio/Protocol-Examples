@@ -1,0 +1,9 @@
+{
+  "name": "replay-coverage-extractor",
+  "version": "0.0.1",
+  "description": "Coverage extraction util for Replay recordings",
+  "main": "index.js",
+  "author": "Mark Erikson <mark@isquaredsoftware.com>",
+  "license": "MIT",
+  "private": false
+}

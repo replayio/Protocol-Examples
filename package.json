@@ -10,11 +10,13 @@
     "start": "esr main.ts"
   },
   "devDependencies": {
+    "@types/ws": "^8.5.3",
     "esbuild": "^0.14.29",
     "esbuild-runner": "^2.2.1",
     "prettier": "^2.6.1"
   },
   "dependencies": {
-    "@recordreplay/protocol": "^0.21.0"
+    "@recordreplay/protocol": "^0.21.0",
+    "ws": "^8.5.0"
   }
 }

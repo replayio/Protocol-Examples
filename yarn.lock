@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@recordreplay/protocol@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@recordreplay/protocol/-/protocol-0.21.0.tgz#5447a3b8d3cc14106ea6b3cb0cb4957c0e92300e"
+  integrity sha512-vrs+27UpTyH+o9FhhOu8cARz9RWzb2nkUPp9I9aDAXRX5DcDliSSCPX7vo1v1pdR7vSKK0Md+gnhKS3rK0IXCA==
+
 buffer-from@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.2.tgz#2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5"

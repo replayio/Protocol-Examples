@@ -13,5 +13,8 @@
     "esbuild": "^0.14.29",
     "esbuild-runner": "^2.2.1",
     "prettier": "^2.6.1"
+  },
+  "dependencies": {
+    "@recordreplay/protocol": "^0.21.0"
   }
 }

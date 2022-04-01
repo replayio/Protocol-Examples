@@ -10,6 +10,7 @@
     "start": "esr main.ts"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.181",
     "@types/ws": "^8.5.3",
     "esbuild": "^0.14.29",
     "esbuild-runner": "^2.2.1",
@@ -18,6 +19,7 @@
   "dependencies": {
     "@recordreplay/protocol": "^0.21.0",
     "istanbul-lib-coverage": "^3.2.0",
+    "lodash": "^4.17.21",
     "ws": "^8.5.0"
   }
 }

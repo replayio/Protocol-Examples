@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@recordreplay/protocol": "^0.21.0",
+    "istanbul-lib-coverage": "^3.2.0",
     "ws": "^8.5.0"
   }
 }

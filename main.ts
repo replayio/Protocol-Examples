@@ -2,7 +2,8 @@ import { startClient } from "./protocol/socket";
 import type { newSource } from "@recordreplay/protocol";
 import groupBy from "lodash/groupBy";
 import { createFileCoverage, createCoverageMap } from "istanbul-lib-coverage";
-import util from "util";
+import { createContext } from "istanbul-lib-report";
+import { create as createNewReport } from "istanbul-reports";
 
 async function main() {
   const [node, script, recordingId] = process.argv;
@@ -25,8 +26,6 @@ function processRecording(recordingId: string) {
     await client.Debugger.findSources({}, sessionId);
 
     const demoSourceEntry = sources.find(s => s.url?.endsWith("demo-script.js"))!;
-
-    console.log("Demo source entry: ", demoSourceEntry);
 
     const demoSourceText = await client.Debugger.getSourceContents(
       {
@@ -83,10 +82,22 @@ function processRecording(recordingId: string) {
       demoFileCoverage.s[index] = statement.hits;
     });
 
-    // const lineCoverage = demoFileCoverage.getLineCoverage();
-    // console.log("Line coverage: ", lineCoverage);
     const coverageMap = createCoverageMap();
     coverageMap.addFileCoverage(demoFileCoverage);
+
+    const context = createContext({
+      dir: "./coverage",
+      coverageMap,
+      sourceFinder: filePath => {
+        if (filePath === demoSourceEntry.url!) {
+          return demoSourceText.contents;
+        }
+        throw new Error(`Could not find file for source path: ${filePath}`);
+      },
+    });
+
+    const report = createNewReport("html", {});
+    report.execute(context);
 
     process.exit(0);
   });

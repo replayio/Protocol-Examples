@@ -6,7 +6,12 @@
   "author": "Mark Erikson <mark@isquaredsoftware.com>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "start": "esr main.ts"
+  },
   "devDependencies": {
+    "esbuild": "^0.14.29",
+    "esbuild-runner": "^2.2.1",
     "prettier": "^2.6.1"
   }
 }

@@ -5,5 +5,8 @@
   "main": "index.js",
   "author": "Mark Erikson <mark@isquaredsoftware.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "prettier": "^2.6.1"
+  }
 }

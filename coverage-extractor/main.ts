@@ -5,8 +5,10 @@ import { createFileCoverage, createCoverageMap } from "istanbul-lib-coverage";
 import { createContext } from "istanbul-lib-report";
 import { create as createNewReport } from "istanbul-reports";
 
+const DEFAULT_DEMO_RECORDING_ID = "1ffd2c10-5c51-452a-8579-ef313645bccb";
+
 async function main() {
-  const [node, script, recordingId] = process.argv;
+  const [node, script, recordingId = DEFAULT_DEMO_RECORDING_ID] = process.argv;
 
   if (!recordingId || typeof recordingId !== "string") {
     console.error("Please provide a Replay recording ID");

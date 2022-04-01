@@ -1,7 +1,7 @@
 {
   "name": "replay-react-mount-detection",
   "version": "0.0.1",
-  "description": "Coverage extraction util for Replay recordings",
+  "description": "Checking stack frames and analyzing local variables",
   "license": "MIT",
   "private": false,
   "scripts": {

@@ -1,5 +1,5 @@
 {
-  "name": "replay-coverage-extractor",
+  "name": "replay-react-mount-detection",
   "version": "0.0.1",
   "description": "Coverage extraction util for Replay recordings",
   "license": "MIT",
@@ -8,10 +8,6 @@
     "start": "esr main.ts"
   },
   "devDependencies": {
-    "@types/istanbul-lib-coverage": "^2.0.4",
-    "@types/istanbul-lib-report": "^3.0.0",
-    "@types/istanbul-reports": "^3.0.1",
-    "@types/lodash": "^4.14.181",
     "@types/ws": "^8.5.3",
     "esbuild": "^0.14.29",
     "esbuild-runner": "^2.2.1",
@@ -19,10 +15,6 @@
   },
   "dependencies": {
     "@recordreplay/protocol": "^0.21.0",
-    "istanbul-lib-coverage": "^3.2.0",
-    "istanbul-lib-report": "^3.0.0",
-    "istanbul-reports": "^3.1.4",
-    "lodash": "^4.17.21",
     "ws": "^8.5.0"
   }
 }

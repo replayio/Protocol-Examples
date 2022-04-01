@@ -1,4 +1,4 @@
-import { defer, makeInfallible } from "./utils";
+import WebSocket from "ws";
 import {
   ProtocolClient,
   EventMethods,
@@ -9,6 +9,9 @@ import {
   CommandParams,
   CommandResult,
 } from "@recordreplay/protocol";
+import { defer } from "./utils";
+
+const address = "wss://dispatch.replay.io";
 
 interface Message {
   id: number;
@@ -18,97 +21,42 @@ interface Message {
   pauseId?: string;
 }
 
-let socket: WebSocket;
-let gSocketOpen = false;
-
-let gPendingMessages: Message[] = [];
-let gNextMessageId = 1;
-
 interface MessageWaiter {
   method: string;
   resolve: (value: any) => void;
   reject: (reason: any) => void;
 }
 
-const gMessageWaiters = new Map<number, MessageWaiter>();
-
-// These are helpful when investigating connection speeds.
-const gStartTime = Date.now();
-let gSentBytes = 0;
-let gReceivedBytes = 0;
-let lastReceivedMessageTime = Date.now();
-
-export function initSocket(address: string) {
-  socket = new WebSocket(address);
-
-  socket.onopen = makeInfallible(onSocketOpen);
-  // socket.onclose = makeInfallible(() => store.dispatch(onSocketClose()));
-  socket.onerror = makeInfallible(onSocketError);
-  socket.onmessage = makeInfallible(onSocketMessage);
-}
-
-export function sendMessage<M extends CommandMethods>(
-  method: M,
-  params: CommandParams<M>,
-  sessionId?: SessionId,
-  pauseId?: PauseId
-): Promise<CommandResult<M>> {
-  const id = gNextMessageId++;
-  const msg = { id, sessionId, pauseId, method, params };
-
-  if (gSocketOpen) {
-    doSend(msg);
-  } else {
-    gPendingMessages.push(msg);
-  }
-
-  const { promise, resolve, reject } = defer<any>();
-  gMessageWaiters.set(id, { method, resolve, reject });
-
-  return promise;
-}
-
-const doSend = makeInfallible(msg => {
-  const str = JSON.stringify(msg);
-  gSentBytes += str.length;
-
-  socket.send(str);
-});
-
-function onSocketOpen() {
-  console.log("Socket Open");
-  gPendingMessages.forEach(msg => doSend(msg));
-  gPendingMessages.length = 0;
-  gSocketOpen = true;
-}
-
-const gEventListeners = new Map<string, (ev: any) => void>();
-
-export function addEventListener<M extends EventMethods>(
+function addEventListener<M extends EventMethods>(
   event: M,
   handler: (params: EventParams<M>) => void
 ) {
-  if (gEventListeners.has(event)) {
-    throw new Error("Duplicate event listener: " + event);
-  }
   gEventListeners.set(event, handler);
 }
 
-export function removeEventListener<M extends EventMethods>(event: M) {
-  gEventListeners.delete(event);
-}
+function removeEventListener() {}
 
-export const client = new ProtocolClient({
-  sendCommand: sendMessage,
-  addEventListener,
-  removeEventListener,
-});
+const gMessageWaiters = new Map<number, MessageWaiter>();
+const gEventListeners = new Map<string, (ev: any) => void>();
+let gSocketOpen: boolean;
+let gNextMessageId = 1;
+let gPendingMessages: Message[] = [];
+let initCallback: (client: ProtocolClient) => void;
 
-function onSocketMessage(evt: MessageEvent<any>) {
-  lastReceivedMessageTime = Date.now();
-  gReceivedBytes += evt.data.length;
-  const msg = JSON.parse(evt.data);
+const socket = new WebSocket(address);
+socket.onopen = () => {
+  console.log("socket open");
+  gSocketOpen = true;
+  initCallback(client);
+};
+socket.onclose = () => {
+  console.log("onclose");
+  gSocketOpen = false;
+};
+socket.onerror = () => console.log("onerror");
 
+socket.onmessage = evt => {
+  const msg = JSON.parse(evt.data as any);
   if (msg.id) {
     const { method, resolve, reject } = gMessageWaiters.get(msg.id)!;
 
@@ -125,26 +73,35 @@ function onSocketMessage(evt: MessageEvent<any>) {
   } else {
     console.error("Received unknown message", msg);
   }
+};
+
+function sendMessage<M extends CommandMethods>(
+  method: M,
+  params: CommandParams<M>,
+  sessionId?: SessionId,
+  pauseId?: PauseId
+): Promise<CommandResult<M>> {
+  const id = gNextMessageId++;
+  const msg = { id, sessionId, pauseId, method, params };
+
+  if (gSocketOpen) {
+    socket.send(JSON.stringify(msg));
+  } else {
+    gPendingMessages.push(msg);
+  }
+
+  const { promise, resolve, reject } = defer<any>();
+  gMessageWaiters.set(id, { method, resolve, reject });
+
+  return promise;
 }
 
-// Used in the `app` helper for local testing
-export function triggerEvent(method: string, params: any) {
-  const handler = gEventListeners.get(method)!;
-  handler(params);
-}
+const client = new ProtocolClient({
+  sendCommand: sendMessage,
+  addEventListener,
+  removeEventListener,
+});
 
-export function getDisconnectionError() {
-  return {
-    message: "Ready when you are!",
-    content: "Replays disconnect after 5 minutes to reduce server load.",
-    action: "refresh",
-  };
-}
-
-function onSocketClose() {
-  console.log("Socket closed");
-}
-
-function onSocketError(evt: Event) {
-  console.error("Socket Error", evt);
-}
+export const startClient = (onStart: typeof initCallback) => {
+  initCallback = onStart;
+};

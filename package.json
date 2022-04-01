@@ -10,6 +10,7 @@
     "start": "esr main.ts"
   },
   "devDependencies": {
+    "@types/istanbul-lib-coverage": "^2.0.4",
     "@types/lodash": "^4.14.181",
     "@types/ws": "^8.5.3",
     "esbuild": "^0.14.29",

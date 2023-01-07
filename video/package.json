@@ -1,0 +1,22 @@
+{
+  "name": "replay-react-mount-detection",
+  "version": "0.0.1",
+  "description": "Checking stack frames and analyzing local variables",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "esr main.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@types/ws": "^8.5.3",
+    "esbuild": "^0.14.29",
+    "esbuild-runner": "^2.2.1",
+    "prettier": "^2.6.1"
+  },
+  "dependencies": {
+    "@recordreplay/protocol": "^0.21.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "ws": "^8.5.0"
+  }
+}

@@ -6,7 +6,7 @@ import { createFileCoverage, createCoverageMap } from "istanbul-lib-coverage";
 import { createContext } from "istanbul-lib-report";
 import { create as createNewReport } from "istanbul-reports";
 
-const DEFAULT_DEMO_RECORDING_ID = "1ffd2c10-5c51-452a-8579-ef313645bccb";
+const DEFAULT_DEMO_RECORDING_ID = "be1a4568-6c84-474c-a9eb-3a0491a792d8";
 
 async function main() {
   const [node, script, recordingId = DEFAULT_DEMO_RECORDING_ID] = process.argv;
@@ -49,10 +49,10 @@ function processRecording(recordingId: string) {
       }
 
       const url = new URL(entry.url);
-      // TODO This check for "real sources" is fairly specific to Replay's source and build tooling atm
+      // TODO This check for "real sources" is specific to the "Redux CSB" demo recording atm
       if (
         url.pathname.startsWith("/src") &&
-        url.protocol == "webpack:" &&
+        url.protocol !== "webpack:" &&
         entry.kind === "sourceMapped"
       ) {
         sourceGroups.src.push(entry);

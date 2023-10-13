@@ -1,0 +1,17 @@
+{
+  "name": "replay-routines",
+  "version": "0.0.1",
+  "description": "NON-FUNCTIONAL: copy-pasted implementation of Replay's backend processing analysis routines",
+  "license": "MIT",
+  "private": false,
+  "scripts": {},
+  "devDependencies": {
+    "@types/lodash": "^4.14.199",
+    "@types/node": "^20.8.5"
+  },
+  "dependencies": {
+    "@replayio/protocol": "^0.61.0",
+    "lodash": "^4.17.21",
+    "suspense": "^0.0.48"
+  }
+}

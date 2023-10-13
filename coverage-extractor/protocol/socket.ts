@@ -8,7 +8,7 @@ import {
   PauseId,
   CommandParams,
   CommandResult,
-} from "@recordreplay/protocol";
+} from "@replayio/protocol";
 import { defer } from "./utils";
 
 const address = "wss://dispatch.replay.io";

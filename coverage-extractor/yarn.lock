@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@recordreplay/protocol@^0.21.0":
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/@recordreplay/protocol/-/protocol-0.21.0.tgz#5447a3b8d3cc14106ea6b3cb0cb4957c0e92300e"
-  integrity sha512-vrs+27UpTyH+o9FhhOu8cARz9RWzb2nkUPp9I9aDAXRX5DcDliSSCPX7vo1v1pdR7vSKK0Md+gnhKS3rK0IXCA==
+"@replayio/protocol@^0.61.0":
+  version "0.61.0"
+  resolved "https://registry.yarnpkg.com/@replayio/protocol/-/protocol-0.61.0.tgz#655985c421677d95fd690957680e0d4227349730"
+  integrity sha512-AhpgQ/S4ZvBsEiXgzTeS6JbgdYNCx/EzIvcRvvqBmMcY3qN3cdYnhXRevtN6scR/pKKyD7q/nQod9nKOb7upmQ==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.4":
   version "2.0.4"

@@ -45,6 +45,8 @@ function getSourceLocationPoints(
   sessionId: string,
   location: Location
 ): Promise<PointDescription[]> {
+  // TODO The Analysis API was removed from our protocol a while back.
+  // Today you'd use `Session.findPoints` and `Session.runEvaluation`.
   return new Promise(async resolve => {
     const { analysisId } = await client.Analysis.createAnalysis(
       {

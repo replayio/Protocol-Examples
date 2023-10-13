@@ -18,7 +18,7 @@
     "prettier": "^2.6.1"
   },
   "dependencies": {
-    "@recordreplay/protocol": "^0.21.0",
+    "@replayio/protocol": "^0.59.0",
     "istanbul-lib-coverage": "^3.2.0",
     "istanbul-lib-report": "^3.0.0",
     "istanbul-reports": "^3.1.4",

@@ -1,6 +1,6 @@
 import fs from "fs";
 import { startClient } from "./protocol/socket";
-import type { getHitCountsResult, newSource } from "@recordreplay/protocol";
+import type { getHitCountsResult, newSource } from "@replayio/protocol";
 import groupBy from "lodash/groupBy";
 import { createFileCoverage, createCoverageMap } from "istanbul-lib-coverage";
 import { createContext } from "istanbul-lib-report";
@@ -33,7 +33,7 @@ function processRecording(recordingId: string) {
 
     const sources: newSource[] = [];
     // Fetch the sources
-    client.Debugger.addNewSourceListener(source => sources.push(source));
+    client.Debugger.addNewSourcesListener(newSources => sources.push(...newSources.sources));
     await client.Debugger.findSources({}, sessionId);
 
     const sourceGroups: SourceGroups = {
@@ -48,6 +48,7 @@ function processRecording(recordingId: string) {
         return;
       }
 
+      console.log("URL path: ", entry.url);
       const url = new URL(entry.url);
       // TODO This check for "real sources" is fairly specific to Replay's source and build tooling atm
       if (
@@ -56,8 +57,6 @@ function processRecording(recordingId: string) {
         entry.kind === "sourceMapped"
       ) {
         sourceGroups.src.push(entry);
-      } else if (url.pathname.startsWith("/node_modules")) {
-        sourceGroups.node_modules.push(entry);
       } else {
         sourceGroups.other.push(entry);
       }

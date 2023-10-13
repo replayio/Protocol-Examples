@@ -31,4 +31,4 @@ The `shared` folder contains logic we've built up over time to work with our pro
 
 - [Replay Blog: How We Rebuilt React DevTools with Replay Routines](https://blog.replay.io/how-we-rebuilt-react-devtools-with-replay-routines) (Jan 2023)
 - Upcoming: Mark's talk "Building Better React Debugging with Replay Analysis" at React Advanced 2023 ( https://reactadvanced.com/#speakers )
-- Contact Mark! https://twitter.com/acemarke, or []`@acemarke` in the Replay Discord](https://discord.gg/replayio)
+- Contact Mark! [https://twitter.com/acemarke](https://twitter.com/acemarke), or [`@acemarke` in the Replay Discord](https://discord.gg/replayio)
